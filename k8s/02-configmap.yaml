@@ -1,0 +1,13 @@
+apiVersion: v1
+data:
+  logstash.conf: "input {\n  file {\n         path => \"/var/log/kubernetes/audit/audit.log"\n
+    \   start_position => \"beginning\"\n    sincedb_path => \"/dev/null\"\n  }\n}\noutput
+    {\n    azure_loganalytics {\n        customer_id => \"xxxxxx\"\n
+    \       shared_key => \"xxxxxx\"\n
+    \       log_type => \"pamiraudit\"\n        key_names  => [] \n        key_types
+    => {}\n        max_batch_items => 1\n    }\n}"
+kind: ConfigMap
+metadata:
+  labels:
+    k8s-app: kubeaudit-logging
+  name: logstash-config
